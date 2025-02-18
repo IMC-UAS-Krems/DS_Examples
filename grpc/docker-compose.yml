@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+ grpc:
+  build:
+   context: .
+   dockerfile: ./Dockerfile
+  ports:
+   - 50051:50051
+  volumes:
+   - ./:/app
+ redis:
+  image: "redis:alpine"
+  ports:
+   - 6379:6379
+
+
+
+
+
+  

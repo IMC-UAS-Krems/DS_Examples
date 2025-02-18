@@ -1,0 +1,2 @@
+pip install grpcio-tools
+python -m grpc_tools.protoc --proto_path=. --python_out=. --grpc_python_out=. hello.proto

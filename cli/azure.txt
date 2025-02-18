@@ -1,0 +1,25 @@
+#/bin/bash
+
+# install azure cli (mac os)
+brew install azure-cli
+
+# login into azure
+az login
+
+# create a resource group in the zone West Europe
+az group create --name myResourceGroup --location westeurope
+
+# create a new AKS cluster with 1 node
+az aks create --resource-group myResourceGroup --name myCluster --node-count 1 --generate-ssh-keys
+
+# configure Kubernetes to use the cluster
+az aks get-credentials --resource-group myResourceGroup --name myCluster
+
+# delete a resource group with all its resources
+az group delete --name myResourceGroup --yes --no-wait
+
+# create a container registry
+az acr create --resource-group myResourceGroup --name myContainerRegistry --sku Basic
+
+# log into a container registry
+az acr login --name myContainerRegistry

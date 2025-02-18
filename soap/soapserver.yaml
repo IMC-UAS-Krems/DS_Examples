@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soapserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soapserver
+  template:
+    metadata:
+      labels:
+        app: soapserver
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: soapserver
+        image: rubenrtorrubiano/soapserver:latest
+        ports:
+        - containerPort: 7789
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: soapserver
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 7789
+  selector:
+    app: soapserver

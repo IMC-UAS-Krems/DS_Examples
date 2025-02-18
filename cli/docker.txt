@@ -1,0 +1,34 @@
+#/bin/bash
+
+# build a docker image from a dockerfile and tag it with version
+docker build -t myimage:1.0 .
+
+# list all images
+docker image ls 
+
+# delete an image
+docker image rm myimage:1.0
+
+# push an image to a registry (i.e. DockerHub)
+docker push reponame/myimage:1.0
+
+# list all containers
+docker container ls 
+
+# run a container mapping port 80 of the host to port 3000 of the container
+docker container run --name mycontainer -p 80:3000 myimage:1.0
+
+# stop a container
+docker container stop mycontainer
+
+# delete all containers
+docker container rm -f $(docker ps -aq)
+
+# print container logs
+docker container logs mycontainer
+
+# ssh into container
+docker exec -it mycontainer /bin/bash
+
+# create a new docker context
+docker context create context_name

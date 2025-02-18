@@ -1,0 +1,10 @@
+venv/*
+*.log
+log/*
+rest/*.yaml
+*.pyc
+launch.json
+tasks.json
+.idea
+
+

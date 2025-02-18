@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudapp
+spec:
+  selector:
+    app: cloudapp
+  ports:
+    - protocol: "TCP"
+      port: 5000
+      targetPort: 5000
+      nodePort: 30001
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudapp
+spec:
+  selector:
+    matchLabels:
+      app: cloudapp
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: cloudapp
+    spec:
+      containers:
+        - name: cloudapp
+          image: cloudapp:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+ web:
+  image: rubenrtorrubiano/cloudapp:latest
+  ports:
+   - 5000:5000
+
+ redis:
+  image: "redis:alpine"
+  ports:
+   - 6379:6379
+
+
+
+
+
+  

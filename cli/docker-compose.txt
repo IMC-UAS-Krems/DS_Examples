@@ -1,0 +1,18 @@
+#/bin/bash
+
+# builds and starts all containers for a given service
+docker-compose -f service.yml up
+
+# stop and remove all containers
+docker-compose down
+
+# list containers
+docker-compose ps
+
+# start containers
+docker-compose start
+
+# stop containers
+docker-compose stop
+
+

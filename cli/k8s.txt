@@ -1,0 +1,55 @@
+#/bin/bash
+
+# show kubeconfig setting
+kubectl config view
+
+# display all context
+kubectl config get-contexts
+
+# display current context
+kubectl config current-context
+
+# use context
+kubectl config use-context context-name
+
+# apply resources
+kubectl apply -f config.yaml
+
+# list all services
+kubectl get services
+
+# list all pods
+kubectl get pods
+
+# list a deployment
+kubectl get deployment deploy-name
+
+# get node infos
+kubectl top node
+
+# set up horizontal pod autoscaler
+kubectl autoscale deployment deploy-name --cpu-percent=50 --min=1 --max=10
+
+# monitor horizontal pod autoscaler
+kubectl get hpa
+
+# deploy metrics server
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# describe pod (useful for debugging)
+kubectl describe pod pod-name
+
+# start minikube environment
+minikube start
+
+# start minikube service
+minikube service
+
+# returns the ip address of the minikube cluster
+minikube ip
+
+# minikube enable metrics-server
+minikube addons enable metrics-server
+
+# run rancher
+docker run -d --restart=unless-stopped -p 8080:8080 --name rancher-server rancher/server:latest

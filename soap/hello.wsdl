@@ -1,0 +1,58 @@
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+                  xmlns:wsdlsoap11="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap11enc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:soap12env="http://www.w3.org/2003/05/soap-envelope"
+                  xmlns:soap12enc="http://www.w3.org/2003/05/soap-encoding"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing"
+                  xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:tns="ds_examples.soap.hello" targetNamespace="ds_examples.soap.hello" name="Application">
+    <wsdl:types>
+        <xs:schema targetNamespace="ds_examples.soap.hello" elementFormDefault="qualified">
+            <xs:complexType name="say_hello">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string" minOccurs="0" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="say_helloResponse">
+                <xs:sequence>
+                    <xs:element name="say_helloResult" type="xs:string" minOccurs="0" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="say_hello" type="tns:say_hello"/>
+            <xs:element name="say_helloResponse" type="tns:say_helloResponse"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="say_hello">
+        <wsdl:part name="say_hello" element="tns:say_hello"/>
+    </wsdl:message>
+    <wsdl:message name="say_helloResponse">
+        <wsdl:part name="say_helloResponse" element="tns:say_helloResponse"/>
+    </wsdl:message>
+    <wsdl:service name="HelloService">
+        <wsdl:port name="Application" binding="tns:Application">
+            <wsdlsoap11:address location="http://localhost:7789/"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="Application">
+        <wsdl:operation name="say_hello" parameterOrder="say_hello">
+            <wsdl:input name="say_hello" message="tns:say_hello"/>
+            <wsdl:output name="say_helloResponse" message="tns:say_helloResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Application" type="tns:Application">
+        <wsdlsoap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="say_hello">
+            <wsdlsoap11:operation soapAction="say_hello" style="document"/>
+            <wsdl:input name="say_hello">
+                <wsdlsoap11:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="say_helloResponse">
+                <wsdlsoap11:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

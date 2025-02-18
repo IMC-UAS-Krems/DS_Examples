@@ -1,0 +1,20 @@
+<title>Input code</title>
+
+<body>
+    {% if local_name %}
+        <p>Name: {{ local_name }}</p>
+    {% endif %}
+    {% if message %}
+        <p>Note: {{ message }}</p>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</body>
+
+<form method="POST">
+    <p>
+        <label for="code">Code</label>
+        <input id="code" name="code" type="text">
+    </p>
+    <input type="submit" value="Submit">
+</form>
