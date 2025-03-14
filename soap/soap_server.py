@@ -29,6 +29,8 @@
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# pip install spyne
+# pip install lxml
 from spyne.application import Application
 from spyne.decorator import srpc
 from spyne.protocol.soap import Soap11
