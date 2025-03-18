@@ -32,6 +32,7 @@
 from sys import argv
 from urllib.error import URLError
 
+# pip install suds
 from suds.client import Client, WebFault
 
 name_to_echo = ""
@@ -45,7 +46,7 @@ else:
     name_to_echo = "Dude"
 
 import logging
-logging.basicConfig(level=logging.INFO, filename="../log/suds.log")
+logging.basicConfig(level=logging.INFO) 
 logging.getLogger('suds.client').setLevel(logging.DEBUG)
 logging.getLogger('suds.transport').setLevel(logging.DEBUG)
 
