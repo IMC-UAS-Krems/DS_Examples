@@ -10,7 +10,7 @@
 # set -e # exit if error
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
-location="East US"
+location="Canada Central"
 resourceGroup="msdocs-app-service-rg-$randomIdentifier"
 tag="deploy-linux-docker-app-only.sh"
 appServicePlan="msdocs-app-service-plan-$randomIdentifier"
