@@ -60,7 +60,23 @@ async def get_user_input():
     Awaits user input
     :return:
     """
-    pass # TO IMPLEMENT
+    while True:
+        line = await aioconsole.ainput('Enter command (q = quit and shutdown server): ')
+        command_list = line.split(' ')
+        len_command = len(command_list)
+        if len_command == 0:
+            continue
+        if command_list[0] == 'get' and len_command == 2:
+            value = await node.get(command_list[1])
+            await aioconsole.aprint(f'Received value {value}')
+        elif command_list[0] == 'set' and len_command == 3:
+            await node.set(command_list[1], command_list[2])
+        elif command_list[0] == 'del' and len_command == 2:
+            await node.set(command_list[1], '')
+        elif command_list[0] == 'q' or command_list[0] == 'quit':
+            raise asyncio.CancelledError()
+        else:
+            await aioconsole.aprint('Wrong command')
 
 
 async def main(join_network=True, ip='0.0.0.0', port=7123, local_port=7123):
@@ -107,14 +123,19 @@ if __name__ == '__main__':
         elif command == 'join':
             nlocal_port = 7123
             remote_ip = '127.0.0.1'
+            do_join = True
             if nargs > 2:
                 remote_ip = sys.argv[2]
+            elif 'P2P_REMOTE_HOST' in os.environ and os.environ['P2P_REMOTE_HOST'] != '':
+                remote_ip = os.environ['P2P_REMOTE_HOST']
+            else:
+                do_join = False
             if nargs > 3:
                 nport = int(sys.argv[3])
             if nargs > 4:
                 nlocal_port = int(sys.argv[4])
             print(f'Trying to join network via host {remote_ip} on port {nport}')
-            loop.run_until_complete(main(join_network=True, port=nport, ip=remote_ip, local_port=nlocal_port))
+            loop.run_until_complete(main(join_network=do_join, port=nport, ip=remote_ip, local_port=nlocal_port))
         else:
             print('Wrong parameters')
             print_usage()
