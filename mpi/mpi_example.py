@@ -35,9 +35,9 @@ comm = MPI.COMM_WORLD
 
 if comm.rank == 0:
     tasks = [
-        json.dumps({'parameter1': 1, 'parameter2': 2, 'parameter3': 3}),
-        json.dumps({'parameter1': 3, 'parameter2': 1, 'parameter3': 2}),
-        json.dumps({'parameter1': 2, 'parameter2': 3, 'parameter3': 1})
+        json.dumps({'parameter1': 1, 'parameter2': 2, 'parameter3': 3, 'operation': 'ADD'}),
+        json.dumps({'parameter1': 3, 'parameter2': 1, 'parameter3': 2, 'operation': 'SUB'}),
+        json.dumps({'parameter1': 2, 'parameter2': 3, 'parameter3': 1, 'operation': 'POW'})
     ]
 else:
     tasks = None
@@ -49,11 +49,20 @@ unit = comm.scatter(tasks, root=0)
 p = json.loads(unit)
 print(f'[{comm.rank}]: parameters {p}')
 
-calc = (p['parameter1'] + p['parameter2']) * p['parameter3']
+if p['operation'] == 'ADD':
+    calc = p['parameter1'] + p['parameter2'] + p['parameter3']
+elif p['operation'] == 'SUB':
+    calc = p['parameter1'] - p['parameter2'] - p['parameter3']
+elif p['operation'] == 'POW':
+    calc = (p['parameter1'] + p['parameter2'])**p['parameter3']
+else:
+    calc = 'UNKNOWN'
+
+calc = [calc, comm.rank]
 
 # gather results
 result = comm.gather(calc, root=0)
 
 if comm.rank == 0:
-    print("[root]: Result is ", result)
-
+    print("[root]: Results are ", result)
+    
